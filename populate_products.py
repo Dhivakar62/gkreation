@@ -214,7 +214,7 @@ PAINTINGS = [
 
 def run():
     print("=" * 55)
-    print("  GK Creations - Product Population Script")
+    print("  GKreation's - Product Population Script")
     print("=" * 55)
 
     # Clear existing products

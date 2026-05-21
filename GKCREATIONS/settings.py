@@ -1,5 +1,5 @@
 """
-GK Creations – Django Settings
+GKreation's – Django Settings
 Production-ready configuration using python-decouple for environment variables.
 """
 import os

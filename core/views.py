@@ -58,7 +58,7 @@ def register_view(request):
             user = form.save()
             UserProfile.objects.create(user=user)
             login(request, user)
-            messages.success(request, f"Welcome to GK Creations, {user.first_name}! 🎨")
+            messages.success(request, f"Welcome to GKreation's, {user.first_name}! 🎨")
             return redirect('home')
         messages.error(request, "Please correct the errors below.")
     else:

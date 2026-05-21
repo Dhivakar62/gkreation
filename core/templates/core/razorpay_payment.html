@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Pay for Order #{{ order.pk }} — GK Creations{% endblock %}
+{% block title %}Pay for Order #{{ order.pk }} — GKreation's{% endblock %}
 
 {% block extra_css %}
 .pay-card { border-radius: 20px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.12); }
@@ -123,7 +123,7 @@ var options = {
     key:         "{{ razorpay_key_id }}",
     amount:      "{{ amount_paise }}",
     currency:    "INR",
-    name:        "GK Creations",
+    name:        "GKreation's",
     description: "Order #{{ order.pk }} — 50% Advance Payment",
     image:       "https://i.imgur.com/n5tjHFD.png",
     order_id:    "{{ razorpay_order_id }}",

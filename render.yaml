@@ -2,7 +2,7 @@ services:
   - type: web
     name: gkreation
     runtime: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --no-input"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --no-input && python manage.py create_superuser_safe"
     startCommand: "gunicorn GKCREATIONS.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
     plan: free
     envVars:
@@ -17,4 +17,10 @@ services:
       - key: RAZORPAY_KEY_ID
         sync: false
       - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: ADMIN_USERNAME
+        value: "admin"
+      - key: ADMIN_EMAIL
+        value: "admin@gkreations.com"
+      - key: ADMIN_PASSWORD
         sync: false

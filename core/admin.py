@@ -4,8 +4,8 @@ from .models import (
     Customization, PortraitOrder, WeddingEventOrder
 )
 
-admin.site.site_header = "GK Creations Admin"
-admin.site.site_title = "GK Creations"
+admin.site.site_header = "GKreation's Admin"
+admin.site.site_title = "GKreation's"
 admin.site.index_title = "Dashboard"
 
 

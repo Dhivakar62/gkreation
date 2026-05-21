@@ -291,7 +291,7 @@ PAINTINGS = [
 
 def run():
     print("=" * 55)
-    print("  GK Creations — Product Setup")
+    print("  GKreation's — Product Setup")
     print("=" * 55)
 
     count_before = Product.objects.count()
