@@ -30,7 +30,7 @@ def reverse_migration(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0002_create_superuser'),
+        ('core', '0001_initial'),
     ]
 
     operations = [
