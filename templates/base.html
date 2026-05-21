@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +20,9 @@
 
         /* Navbar */
         .navbar { background: var(--dark) !important; padding: 1rem 0; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
-        .navbar-brand { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold) !important; letter-spacing: 1px; }
+        .navbar-brand { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold) !important; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
         .navbar-brand span { color: #fff; }
+        .navbar-logo { height: 42px; width: auto; object-fit: contain; filter: brightness(0) invert(1); border-radius: 4px; }
         .navbar .nav-link { color: rgba(255,255,255,0.85) !important; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.3s; }
         .navbar .nav-link:hover, .navbar .nav-link.active { color: var(--gold) !important; }
         .navbar .dropdown-menu { background: var(--dark); border: 1px solid var(--gold); border-radius: 8px; }
@@ -85,7 +87,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">GK<span>Creations</span></a>
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="GK Kreations Logo" class="navbar-logo">
+                GK<span>REATION'S</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -155,7 +160,7 @@
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4">
-                    <h5>GK Creations</h5>
+                    <h5>GK Kreation's</h5>
                     <p class="small">Bringing art to life through frames, paintings, portraits, and creative services. Your vision, our craft.</p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
@@ -190,7 +195,7 @@
                 </div>
             </div>
             <hr style="border-color: rgba(255,255,255,0.1); margin-top: 2rem;">
-            <p class="text-center small mb-0">© 2024 GK Creations. All rights reserved.</p>
+            <p class="text-center small mb-0">© 2025 GK Kreation's. All rights reserved.</p>
         </div>
     </footer>
 
