@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Login - GK Creations{% endblock %}
+
+{% block extra_css %}
+.auth-wrapper { min-height: calc(100vh - 80px); display: flex; align-items: center; background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%); }
+.auth-card { border-radius: 20px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+.auth-left { background: linear-gradient(135deg, var(--gold), #8B4513); padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+.auth-right { padding: 3rem; background: white; }
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-9">
+                <div class="card auth-card">
+                    <div class="row g-0">
+                        <div class="col-lg-5 auth-left text-white d-none d-lg-flex">
+                            <div>
+                                <i class="fas fa-palette fa-3x mb-4 opacity-75"></i>
+                                <h2 style="font-family:'Playfair Display',serif">Welcome Back</h2>
+                                <p class="opacity-75 mt-2">Login to access your orders, track deliveries, and explore our exclusive art collection.</p>
+                                <hr class="opacity-25 my-4">
+                                <p class="small opacity-75">Don't have an account?</p>
+                                <a href="{% url 'register' %}" class="btn btn-outline-light">Create Account</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 auth-right">
+                            <h3 class="mb-1" style="font-family:'Playfair Display',serif">Sign In</h3>
+                            <p class="text-muted mb-4">Access your GK Creations account</p>
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Username</label>
+                                    {{ form.username }}
+                                    {% if form.username.errors %}<div class="text-danger small mt-1">{{ form.username.errors }}</div>{% endif %}
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Password</label>
+                                    {{ form.password }}
+                                    {% if form.password.errors %}<div class="text-danger small mt-1">{{ form.password.errors }}</div>{% endif %}
+                                </div>
+                                <button type="submit" class="btn btn-gold w-100 py-2 fw-semibold">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                                </button>
+                            </form>
+                            <div class="text-center mt-4 d-lg-none">
+                                <p class="text-muted mb-2">Don't have an account?</p>
+                                <a href="{% url 'register' %}" class="btn btn-outline-gold">Create Account</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% block title %}Checkout — GK Creations{% endblock %}
+
+{% block extra_css %}
+.pay-option label { cursor: pointer; border: 2px solid #e9ecef; border-radius: 10px; padding: 1rem; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s; }
+.pay-option input[type="radio"]:checked + label,
+.pay-option label:has(input[type="radio"]:checked) { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+.rzp-badge { background: #072654; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; letter-spacing: 0.5px; }
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="section-title mb-4">Checkout</h2>
+    <form method="post" id="checkout-form">
+        {% csrf_token %}
+        <div class="row g-4">
+
+            <!-- Left: Address + Payment -->
+            <div class="col-lg-7">
+
+                <!-- Delivery Address -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">
+                            <i class="fas fa-map-marker-alt me-2" style="color:var(--gold)"></i>Delivery Address
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Address Line 1 *</label>
+                                {{ form.address_line1 }}
+                                {% if form.address_line1.errors %}<div class="text-danger small">{{ form.address_line1.errors }}</div>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Address Line 2</label>
+                                {{ form.address_line2 }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">City *</label>
+                                {{ form.city }}
+                                {% if form.city.errors %}<div class="text-danger small">{{ form.city.errors }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">State *</label>
+                                {{ form.state }}
+                                {% if form.state.errors %}<div class="text-danger small">{{ form.state.errors }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Pincode *</label>
+                                {{ form.pincode }}
+                                {% if form.pincode.errors %}<div class="text-danger small">{{ form.pincode.errors }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Phone Number *</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}<div class="text-danger small">{{ form.phone.errors }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">
+                            <i class="fas fa-credit-card me-2" style="color:var(--gold)"></i>Payment Method
+                        </h5>
+
+                        <!-- Razorpay Option -->
+                        <div class="pay-option mb-3">
+                            <input class="form-check-input d-none" type="radio" name="payment_method"
+                                   value="razorpay" id="pay_razorpay" checked>
+                            <label for="pay_razorpay" class="w-100">
+                                <div class="mt-1">
+                                    <i class="fas fa-bolt fa-lg" style="color:var(--gold)"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                                        <strong>Razorpay</strong>
+                                        <span class="rzp-badge">SECURE</span>
+                                        <span class="badge bg-success" style="font-size:10px">Recommended</span>
+                                    </div>
+                                    <p class="text-muted small mb-1">Pay using UPI, Credit/Debit Card, NetBanking, or Wallet</p>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <span class="badge bg-light text-dark border">UPI</span>
+                                        <span class="badge bg-light text-dark border">Visa</span>
+                                        <span class="badge bg-light text-dark border">Mastercard</span>
+                                        <span class="badge bg-light text-dark border">NetBanking</span>
+                                        <span class="badge bg-light text-dark border">Paytm</span>
+                                        <span class="badge bg-light text-dark border">PhonePe</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- COD Option -->
+                        <div class="pay-option">
+                            <input class="form-check-input d-none" type="radio" name="payment_method"
+                                   value="cod" id="pay_cod">
+                            <label for="pay_cod" class="w-100">
+                                <div class="mt-1">
+                                    <i class="fas fa-money-bill-wave fa-lg text-success"></i>
+                                </div>
+                                <div>
+                                    <strong class="d-block mb-1">Cash on Delivery</strong>
+                                    <p class="text-muted small mb-0">Pay 50% advance in cash when your order arrives</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Policy Note -->
+                        <div class="alert alert-warning mt-3 small mb-0">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>50% advance required.</strong> The remaining 50% is due on delivery.
+                            Advance is non-refundable on cancellation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm position-sticky" style="top:100px">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">Order Summary</h5>
+
+                        {% for item in cart.items.all %}
+                        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" class="rounded" style="width:50px;height:50px;object-fit:cover" alt="{{ item.product.name }}">
+                            {% endif %}
+                            <div class="flex-grow-1">
+                                <p class="mb-0 small fw-semibold">{{ item.product.name }}</p>
+                                <small class="text-muted">Qty: {{ item.quantity }}</small>
+                            </div>
+                            <span class="small fw-semibold">₹{{ item.get_subtotal }}</span>
+                        </div>
+                        {% endfor %}
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Total</span>
+                            <span class="fw-bold">₹{{ cart.get_total }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 text-success">
+                            <span class="fw-semibold">Pay now (50%)</span>
+                            <span class="fw-bold">₹{% widthratio cart.get_total 2 1 %}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 text-muted small">
+                            <span>Balance on delivery</span>
+                            <span>₹{% widthratio cart.get_total 2 1 %}</span>
+                        </div>
+
+                        <div class="rounded-2 p-2 mb-3 small" style="background:#e8f5e9">
+                            <i class="fas fa-truck text-success me-1"></i>
+                            Delivery in <strong>14 working days</strong>
+                        </div>
+                        <div class="rounded-2 p-2 mb-3 small" style="background:#fff3e0">
+                            <i class="fas fa-times-circle text-warning me-1"></i>
+                            Free cancellation within <strong>3 days</strong>
+                        </div>
+
+                        <button type="submit" class="btn btn-gold w-100 py-2 fw-bold fs-5" id="place-order-btn">
+                            <i class="fas fa-lock me-2"></i>Place Order
+                        </button>
+                        <a href="{% url 'cart' %}" class="btn btn-outline-secondary w-100 mt-2 btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Highlight selected payment option on click
+document.querySelectorAll('.pay-option label').forEach(function(label) {
+    label.addEventListener('click', function() {
+        document.querySelectorAll('.pay-option label').forEach(l => l.style.borderColor = '');
+        this.style.borderColor = 'var(--gold)';
+    });
+});
+</script>
+{% endblock %}

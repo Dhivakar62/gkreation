@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %}GK Creations - Art & Frames{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <p class="text-warning mb-2 fw-semibold letter-spacing"><i class="fas fa-palette me-2"></i>HANDCRAFTED WITH LOVE</p>
+        <h1 class="display-3 fw-bold mb-3">GK Creations</h1>
+        <p class="lead mb-4 text-white-50" style="max-width:600px;margin:0 auto">Discover our exquisite collection of handcrafted frames, paintings, and bespoke art services tailored just for you.</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{% url 'frames' %}" class="btn btn-gold btn-lg px-4">Explore Frames</a>
+            <a href="{% url 'paintings' %}" class="btn btn-outline-light btn-lg px-4">View Paintings</a>
+        </div>
+        <div class="row g-4 mt-5 text-center">
+            <div class="col-4"><h3 class="text-warning fw-bold">500+</h3><small class="text-white-50">Products</small></div>
+            <div class="col-4"><h3 class="text-warning fw-bold">1200+</h3><small class="text-white-50">Happy Clients</small></div>
+            <div class="col-4"><h3 class="text-warning fw-bold">10+</h3><small class="text-white-50">Years Experience</small></div>
+        </div>
+    </div>
+</section>
+
+<!-- Frames Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title">Our Frames</h2>
+            <a href="{% url 'frames' %}" class="btn btn-outline-gold">View All <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+        {% if frames %}
+        <div class="row g-4">
+            {% for product in frames %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none">
+                    <div class="card product-card h-100">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:220px">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title mb-1 text-dark fw-semibold">{{ product.name }}</h6>
+                            <p class="price mb-0">₹{{ product.price }}</p>
+                            <small class="text-muted">{{ product.material }}</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 text-muted">
+            <i class="fas fa-box-open fa-3x mb-3"></i>
+            <p>No frames available yet. Check back soon!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Divider Banner -->
+<section style="background: linear-gradient(135deg, #1a1a2e, #8B4513); padding: 4rem 0; margin: 2rem 0;">
+    <div class="container text-center text-white">
+        <h2 class="fw-bold mb-2" style="font-family:'Playfair Display',serif">Have Something in Mind?</h2>
+        <p class="text-white-50 mb-4">Send us your photo and let us create a masterpiece just for you.</p>
+        <a href="{% url 'customize' %}" class="btn btn-gold btn-lg px-5">
+            <i class="fas fa-magic me-2"></i>Customize Now
+        </a>
+    </div>
+</section>
+
+<!-- Paintings Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title">Our Paintings</h2>
+            <a href="{% url 'paintings' %}" class="btn btn-outline-gold">View All <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+        {% if paintings %}
+        <div class="row g-4">
+            {% for product in paintings %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none">
+                    <div class="card product-card h-100">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:220px">
+                            <i class="fas fa-paint-brush fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title mb-1 text-dark fw-semibold">{{ product.name }}</h6>
+                            <p class="price mb-0">₹{{ product.price }}</p>
+                            <small class="text-muted">{{ product.size }}</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 text-muted">
+            <i class="fas fa-paint-brush fa-3x mb-3"></i>
+            <p>No paintings available yet. Check back soon!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Services Preview -->
+<section class="py-5" style="background: #f8f4ef;">
+    <div class="container">
+        <h2 class="section-title text-center mb-2" style="display:block">Our Services</h2>
+        <p class="text-center text-muted mb-5">We offer a range of artistic services</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center p-4 h-100">
+                    <div class="mb-3"><i class="fas fa-user-circle fa-3x" style="color:var(--gold)"></i></div>
+                    <h5>Custom Portraits</h5>
+                    <p class="text-muted small">Hand-painted portraits from your photos. Small, Medium, or Large sizes available.</p>
+                    <a href="{% url 'portrait' %}" class="btn btn-outline-gold btn-sm mt-auto">Order Portrait</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center p-4 h-100">
+                    <div class="mb-3"><i class="fas fa-camera fa-3x" style="color:var(--gold)"></i></div>
+                    <h5>Wedding Events</h5>
+                    <p class="text-muted small">Professional photoshoot and videography for your special day.</p>
+                    <a href="{% url 'wedding_event' %}" class="btn btn-outline-gold btn-sm mt-auto">Book Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center p-4 h-100">
+                    <div class="mb-3"><i class="fas fa-magic fa-3x" style="color:var(--gold)"></i></div>
+                    <h5>Customization</h5>
+                    <p class="text-muted small">Upload your image and we'll create a custom art piece for you.</p>
+                    <a href="{% url 'customize' %}" class="btn btn-outline-gold btn-sm mt-auto">Customize</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

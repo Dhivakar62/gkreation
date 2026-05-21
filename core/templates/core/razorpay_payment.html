@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block title %}Pay for Order #{{ order.pk }} — GK Creations{% endblock %}
+
+{% block extra_css %}
+.pay-card { border-radius: 20px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.12); }
+.amount-box { background: linear-gradient(135deg, var(--dark), #2d1b69); color: #fff; border-radius: 14px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; }
+.method-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); padding: 5px 14px; border-radius: 999px; font-size: 13px; margin: 3px; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--gold); color: var(--dark); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+
+            <!-- Amount Box -->
+            <div class="amount-box">
+                <p class="mb-1 opacity-75 small">Advance Payment — Order #{{ order.pk }}</p>
+                <h1 class="display-4 fw-bold mb-1" style="color: var(--gold)">₹{{ advance }}</h1>
+                <p class="opacity-50 small">50% of total ₹{{ order.total_amount }} · Balance on delivery</p>
+                <div class="mt-3">
+                    <span class="method-pill"><i class="fas fa-mobile-alt"></i> UPI</span>
+                    <span class="method-pill"><i class="fas fa-credit-card"></i> Card</span>
+                    <span class="method-pill"><i class="fas fa-university"></i> NetBanking</span>
+                    <span class="method-pill"><i class="fas fa-wallet"></i> Wallet</span>
+                </div>
+            </div>
+
+            <div class="card pay-card mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 text-center">
+                        <img src="https://razorpay.com/favicon.ico" width="20" height="20" class="me-2" alt="Razorpay">
+                        Secure Payment via Razorpay
+                    </h5>
+
+                    <!-- Steps -->
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <div class="d-flex gap-3 align-items-start">
+                            <div class="step-num">1</div>
+                            <p class="mb-0 small pt-1">Click <strong>Pay Now</strong> to open the Razorpay payment window</p>
+                        </div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div class="step-num">2</div>
+                            <p class="mb-0 small pt-1">Choose your preferred method — UPI, Card, NetBanking, or Wallet</p>
+                        </div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div class="step-num">3</div>
+                            <p class="mb-0 small pt-1">Complete the payment of <strong>₹{{ advance }}</strong> securely</p>
+                        </div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div class="step-num">4</div>
+                            <p class="mb-0 small pt-1">You'll be redirected automatically after successful payment</p>
+                        </div>
+                    </div>
+
+                    <!-- Pay Button -->
+                    <button id="rzp-pay-btn" class="btn btn-gold w-100 py-3 fw-bold fs-5">
+                        <i class="fas fa-lock me-2"></i>Pay ₹{{ advance }} Securely
+                    </button>
+
+                    <!-- Hidden form to POST callback data -->
+                    <form id="razorpay-form" method="POST" action="{% url 'razorpay_callback' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="razorpay_order_id"   id="rzp_order_id">
+                        <input type="hidden" name="razorpay_payment_id" id="rzp_payment_id">
+                        <input type="hidden" name="razorpay_signature"  id="rzp_signature">
+                    </form>
+
+                    <p class="text-center text-muted small mt-3">
+                        <i class="fas fa-shield-alt me-1 text-success"></i>
+                        256-bit SSL encrypted · PCI DSS compliant · Powered by Razorpay
+                    </p>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body p-3">
+                    <h6 class="fw-bold mb-3">Order Summary — #{{ order.pk }}</h6>
+                    {% for item in order.items.all %}
+                    <div class="d-flex justify-content-between small mb-2">
+                        <span class="text-muted">{{ item.product.name }} × {{ item.quantity }}</span>
+                        <span>₹{{ item.get_subtotal }}</span>
+                    </div>
+                    {% endfor %}
+                    <hr class="my-2">
+                    <div class="d-flex justify-content-between small fw-semibold">
+                        <span>Total</span><span>₹{{ order.total_amount }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between small text-success fw-semibold mt-1">
+                        <span>Pay now (50% advance)</span><span>₹{{ advance }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between small text-muted mt-1">
+                        <span>Balance on delivery</span><span>₹{{ advance }}</span>
+                    </div>
+                    <div class="mt-2 p-2 rounded small" style="background: #e8f5e9;">
+                        <i class="fas fa-truck text-success me-1"></i>
+                        Expected delivery: <strong>{{ order.expected_delivery|date:"d M Y" }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Address -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-3">
+                    <h6 class="fw-bold mb-2"><i class="fas fa-map-marker-alt me-2" style="color:var(--gold)"></i>Delivery Address</h6>
+                    <p class="mb-0 small text-muted">
+                        {{ order.address_line1 }}{% if order.address_line2 %}, {{ order.address_line2 }}{% endif %},
+                        {{ order.city }}, {{ order.state }} — {{ order.pincode }}<br>
+                        <i class="fas fa-phone me-1"></i>{{ order.phone }}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    key:         "{{ razorpay_key_id }}",
+    amount:      "{{ amount_paise }}",
+    currency:    "INR",
+    name:        "GK Creations",
+    description: "Order #{{ order.pk }} — 50% Advance Payment",
+    image:       "https://i.imgur.com/n5tjHFD.png",
+    order_id:    "{{ razorpay_order_id }}",
+    callback_url: "{% url 'razorpay_callback' %}",
+    redirect:    true,
+    prefill: {
+        name:    "{{ user_name }}",
+        email:   "{{ user_email }}",
+        contact: "{{ user_phone }}"
+    },
+    notes: {
+        order_id: "{{ order.pk }}",
+        address:  "{{ order.address_line1 }}, {{ order.city }}"
+    },
+    theme: {
+        color: "#C9A84C"
+    }
+};
+
+document.getElementById('rzp-pay-btn').onclick = function(e) {
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(response) {
+        alert(
+            'Payment failed!\n' +
+            'Error: '  + response.error.description + '\n' +
+            'Reason: ' + response.error.reason
+        );
+    });
+    rzp.open();
+    e.preventDefault();
+};
+</script>
+{% endblock %}

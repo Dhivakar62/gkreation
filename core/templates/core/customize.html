@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Customize - GK Creations{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-magic fa-3x mb-3" style="color:var(--gold)"></i>
+                        <h2 style="font-family:'Playfair Display',serif">Customize Your Art</h2>
+                        {% if product %}
+                        <p class="text-muted">Customizing: <strong>{{ product.name }}</strong></p>
+                        {% else %}
+                        <p class="text-muted">Upload your JPG image and we'll create something special.</p>
+                        {% endif %}
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Upload Your Image (JPG only) *</label>
+                            {{ form.image }}
+                            {% if form.image.errors %}<div class="text-danger small mt-1">{{ form.image.errors }}</div>{% endif %}
+                        </div>
+                        <!-- Image Preview -->
+                        <div id="imagePreview" class="mb-3 d-none">
+                            <label class="form-label fw-semibold">Preview</label>
+                            <img id="previewImg" src="" class="img-fluid rounded-3 shadow-sm w-100" style="max-height:300px;object-fit:contain" alt="Preview">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Customization Notes</label>
+                            {{ form.notes }}
+                            {% if form.notes.errors %}<div class="text-danger small mt-1">{{ form.notes.errors }}</div>{% endif %}
+                        </div>
+                        <div class="alert alert-info small mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Our team will review your request and contact you within 48 hours with pricing and timeline details.
+                        </div>
+                        <button type="submit" class="btn btn-gold w-100 py-2 fw-semibold">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Customization Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('previewImg').src = ev.target.result;
+            document.getElementById('imagePreview').classList.remove('d-none');
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+{% endblock %}

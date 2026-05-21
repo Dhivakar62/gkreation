@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Register - GK Creations{% endblock %}
+
+{% block extra_css %}
+.auth-wrapper { min-height: calc(100vh - 80px); display: flex; align-items: center; background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%); }
+.auth-card { border-radius: 20px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card auth-card">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-palette fa-2x mb-2" style="color:var(--gold)"></i>
+                            <h3 style="font-family:'Playfair Display',serif">Create Your Account</h3>
+                            <p class="text-muted">Join GK Creations and explore the world of art</p>
+                        </div>
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">First Name</label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}<div class="text-danger small mt-1">{{ form.first_name.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Last Name</label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}<div class="text-danger small mt-1">{{ form.last_name.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Username</label>
+                                    {{ form.username }}
+                                    {% if form.username.errors %}<div class="text-danger small mt-1">{{ form.username.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Email Address</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Password</label>
+                                    {{ form.password1 }}
+                                    {% if form.password1.errors %}<div class="text-danger small mt-1">{{ form.password1.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Confirm Password</label>
+                                    {{ form.password2 }}
+                                    {% if form.password2.errors %}<div class="text-danger small mt-1">{{ form.password2.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-gold w-100 py-2 fw-semibold mt-4">
+                                <i class="fas fa-user-plus me-2"></i>Create Account
+                            </button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <p class="text-muted mb-0">Already have an account? <a href="{% url 'login' %}" style="color:var(--gold)">Sign In</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

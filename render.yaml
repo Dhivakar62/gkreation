@@ -1,0 +1,23 @@
+# render.yaml – Deploy GK Creations to Render
+# Docs: https://render.com/docs/render-yaml
+
+services:
+  - type: web
+    name: gkcreations
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn GKCREATIONS.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    plan: free
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true          # Render auto-generates a secure value
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: PYTHON_VERSION
+        value: "3.12.3"
+      - key: RAZORPAY_KEY_ID
+        sync: false                  # You fill this in the Render dashboard
+      - key: RAZORPAY_KEY_SECRET
+        sync: false                  # You fill this in the Render dashboard

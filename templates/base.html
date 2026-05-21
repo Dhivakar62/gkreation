@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GK Creations{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #C9A84C;
+            --dark: #1a1a2e;
+            --cream: #FDF8F0;
+            --accent: #8B4513;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--cream); color: #333; }
+        h1,h2,h3,h4,h5 { font-family: 'Playfair Display', serif; }
+
+        /* Navbar */
+        .navbar { background: var(--dark) !important; padding: 1rem 0; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+        .navbar-brand { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold) !important; letter-spacing: 1px; }
+        .navbar-brand span { color: #fff; }
+        .navbar .nav-link { color: rgba(255,255,255,0.85) !important; font-weight: 500; padding: 0.5rem 1rem !important; transition: color 0.3s; }
+        .navbar .nav-link:hover, .navbar .nav-link.active { color: var(--gold) !important; }
+        .navbar .dropdown-menu { background: var(--dark); border: 1px solid var(--gold); border-radius: 8px; }
+        .navbar .dropdown-item { color: rgba(255,255,255,0.85); transition: all 0.2s; }
+        .navbar .dropdown-item:hover { background: var(--gold); color: var(--dark); }
+        .cart-badge { background: var(--gold); color: var(--dark); font-size: 0.7rem; font-weight: 700; }
+
+        /* Buttons */
+        .btn-gold { background: var(--gold); color: var(--dark); font-weight: 600; border: none; border-radius: 6px; }
+        .btn-gold:hover { background: #b8903a; color: var(--dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,168,76,0.4); }
+        .btn-outline-gold { border: 2px solid var(--gold); color: var(--gold); background: transparent; font-weight: 600; border-radius: 6px; }
+        .btn-outline-gold:hover { background: var(--gold); color: var(--dark); }
+
+        /* Cards */
+        .product-card { border: none; border-radius: 12px; overflow: hidden; transition: all 0.3s; box-shadow: 0 2px 15px rgba(0,0,0,0.08); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .product-card img { height: 220px; object-fit: cover; transition: transform 0.3s; }
+        .product-card:hover img { transform: scale(1.05); }
+        .product-card .card-body { padding: 1.2rem; }
+        .product-card .price { color: var(--gold); font-weight: 700; font-size: 1.1rem; }
+
+        /* Section Headers */
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--dark); position: relative; display: inline-block; }
+        .section-title::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 60px; height: 3px; background: var(--gold); border-radius: 2px; }
+
+        /* Messages */
+        .messages-container { position: fixed; top: 80px; right: 20px; z-index: 9999; min-width: 320px; max-width: 400px; }
+        .alert { border-radius: 10px; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.15); animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Footer */
+        footer { background: var(--dark); color: rgba(255,255,255,0.75); padding: 3rem 0 1rem; margin-top: 5rem; }
+        footer h5 { color: var(--gold); font-family: 'Playfair Display', serif; margin-bottom: 1rem; }
+        footer a { color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.2s; }
+        footer a:hover { color: var(--gold); }
+
+        /* Hero */
+        .hero-section { background: linear-gradient(135deg, var(--dark) 0%, #2d1b69 50%, var(--accent) 100%); color: white; padding: 6rem 0; text-align: center; }
+        .hero-section h1 { font-size: 3.5rem; color: var(--gold); text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+
+        /* Status Badges */
+        .badge-pending { background: #ffc107; color: #000; }
+        .badge-confirmed { background: #0d6efd; color: #fff; }
+        .badge-shipped { background: #6610f2; color: #fff; }
+        .badge-delivered { background: #198754; color: #fff; }
+        .badge-cancelled { background: #dc3545; color: #fff; }
+
+        /* Progress tracker */
+        .order-timeline { display: flex; align-items: center; justify-content: space-between; margin: 2rem 0; }
+        .timeline-step { text-align: center; flex: 1; }
+        .timeline-step .step-icon { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 1.1rem; }
+        .timeline-step.completed .step-icon { background: var(--gold); color: var(--dark); }
+        .timeline-step.active .step-icon { background: #0d6efd; color: white; box-shadow: 0 0 0 4px rgba(13,110,253,0.2); }
+        .timeline-step.pending .step-icon { background: #e9ecef; color: #6c757d; }
+        .timeline-connector { flex: 1; height: 3px; background: #e9ecef; margin-bottom: 1.8rem; }
+        .timeline-connector.done { background: var(--gold); }
+
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">GK<span>Creations</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link {% block nav_home %}{% endblock %}" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {% block nav_frames %}{% endblock %}" href="{% url 'frames' %}">Frames</a></li>
+                    <li class="nav-item"><a class="nav-link {% block nav_paintings %}{% endblock %}" href="{% url 'paintings' %}">Paintings</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Services</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'service_paintings' %}"><i class="fas fa-paint-brush me-2"></i>Paintings</a></li>
+                            <li><a class="dropdown-item" href="{% url 'portrait' %}"><i class="fas fa-user-circle me-2"></i>Portrait</a></li>
+                            <li><a class="dropdown-item" href="{% url 'wedding_event' %}"><i class="fas fa-camera me-2"></i>Wedding Event</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link {% block nav_about %}{% endblock %}" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link {% block nav_contact %}{% endblock %}" href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cart' %}">
+                            <i class="fas fa-shopping-cart"></i>
+                            {% if cart_count > 0 %}<span class="badge cart-badge rounded-pill ms-1">{{ cart_count }}</span>{% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i>{{ request.user.first_name|default:request.user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'order_list' %}"><i class="fas fa-box me-2"></i>My Orders</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i>Login</a></li>
+                    <li class="nav-item"><a class="btn btn-gold ms-2" href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {% if message.tags == 'success' %}<i class="fas fa-check-circle me-2"></i>
+            {% elif message.tags == 'error' or message.tags == 'danger' %}<i class="fas fa-exclamation-circle me-2"></i>
+            {% elif message.tags == 'warning' %}<i class="fas fa-exclamation-triangle me-2"></i>
+            {% else %}<i class="fas fa-info-circle me-2"></i>{% endif %}
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5>GK Creations</h5>
+                    <p class="small">Bringing art to life through frames, paintings, portraits, and creative services. Your vision, our craft.</p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h5>Shop</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="{% url 'frames' %}">Frames</a></li>
+                        <li><a href="{% url 'paintings' %}">Paintings</a></li>
+                        <li><a href="{% url 'customize' %}">Customize</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5>Services</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="{% url 'service_paintings' %}">Paintings</a></li>
+                        <li><a href="{% url 'portrait' %}">Portrait</a></li>
+                        <li><a href="{% url 'wedding_event' %}">Wedding Events</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Policies</h5>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-check me-2 text-warning"></i>50% advance required</li>
+                        <li><i class="fas fa-truck me-2 text-warning"></i>14-day delivery</li>
+                        <li><i class="fas fa-times me-2 text-warning"></i>Cancel within 3 days</li>
+                        <li><i class="fas fa-info me-2 text-warning"></i>Advance non-refundable</li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1); margin-top: 2rem;">
+            <p class="text-center small mb-0">© 2024 GK Creations. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Auto-dismiss alerts
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(a => {
+                let alert = bootstrap.Alert.getOrCreateInstance(a);
+                alert.close();
+            });
+        }, 5000);
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

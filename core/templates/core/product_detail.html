@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} - GK Creations{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}" style="color:var(--gold)">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url product.category %}" style="color:var(--gold)">{{ product.get_category_display }}</a></li>
+            <li class="breadcrumb-item active">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <!-- Product Image -->
+        <div class="col-lg-5">
+            <div class="position-sticky" style="top: 100px;">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid rounded-3 shadow-lg w-100" alt="{{ product.name }}" style="max-height:500px;object-fit:cover">
+                {% else %}
+                <div class="rounded-3 shadow-lg d-flex align-items-center justify-content-center bg-light" style="height:400px">
+                    <i class="fas fa-image fa-5x text-muted"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-7">
+            <span class="badge mb-2" style="background:var(--gold);color:var(--dark)">{{ product.get_category_display }}</span>
+            <h1 class="fw-bold mb-2">{{ product.name }}</h1>
+            <h2 class="fw-bold mb-4" style="color:var(--gold)">₹{{ product.price }}</h2>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6">
+                    <div class="p-3 rounded-2" style="background:#f8f4ef">
+                        <small class="text-muted d-block">Size</small>
+                        <strong>{{ product.size }}</strong>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 rounded-2" style="background:#f8f4ef">
+                        <small class="text-muted d-block">Material</small>
+                        <strong>{{ product.material }}</strong>
+                    </div>
+                </div>
+                {% if product.model_number %}
+                <div class="col-6">
+                    <div class="p-3 rounded-2" style="background:#f8f4ef">
+                        <small class="text-muted d-block">Model</small>
+                        <strong>{{ product.model_number }}</strong>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col-6">
+                    <div class="p-3 rounded-2" style="background:#f8f4ef">
+                        <small class="text-muted d-block">Availability</small>
+                        {% if product.stock > 0 %}
+                        <strong class="text-success"><i class="fas fa-check-circle me-1"></i>In Stock</strong>
+                        {% else %}
+                        <strong class="text-danger">Out of Stock</strong>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="fw-semibold mb-2">Description</h5>
+                <p class="text-muted" style="line-height:1.8">{{ product.description }}</p>
+            </div>
+
+            <!-- Action Buttons -->
+            {% if user.is_authenticated %}
+            <div class="d-flex gap-3 flex-wrap mb-4">
+                <form method="post" action="{% url 'add_to_cart' product.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-gold btn-lg px-4">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </form>
+                <a href="{% url 'buy_now' product.pk %}" class="btn btn-outline-gold btn-lg px-4">
+                    <i class="fas fa-bolt me-2"></i>Buy Now
+                </a>
+                <a href="{% url 'customize_product' product.pk %}" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="fas fa-magic me-2"></i>Customize
+                </a>
+            </div>
+            {% else %}
+            <div class="alert alert-warning">
+                <i class="fas fa-lock me-2"></i>Please <a href="{% url 'login' %}?next={{ request.path }}" class="fw-bold">login</a> to purchase this product.
+            </div>
+            {% endif %}
+
+            <!-- Policy Info -->
+            <div class="rounded-3 p-3" style="background:#fff3cd;border:1px solid #ffc107">
+                <h6 class="fw-semibold mb-2"><i class="fas fa-info-circle me-2 text-warning"></i>Order Policy</h6>
+                <ul class="mb-0 small ps-3">
+                    <li>50% advance payment required at checkout</li>
+                    <li>Remaining payment on delivery</li>
+                    <li>Delivery within 14 working days</li>
+                    <li>Free cancellation within 3 days (advance non-refundable)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

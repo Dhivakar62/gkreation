@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Portrait Service - GK Creations{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-circle fa-3x mb-3" style="color:var(--gold)"></i>
+                        <h2 style="font-family:'Playfair Display',serif">Order a Portrait</h2>
+                        <p class="text-muted">Upload your photo for a hand-painted portrait masterpiece.</p>
+                    </div>
+
+                    <!-- Pricing Table -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-4">
+                            <div class="text-center p-3 rounded-3 border">
+                                <strong class="d-block">Small</strong>
+                                <small class="text-muted">8×10 inch</small>
+                                <h5 class="mt-1 mb-0" style="color:var(--gold)">₹500</h5>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center p-3 rounded-3 border border-warning">
+                                <strong class="d-block">Medium</strong>
+                                <small class="text-muted">12×16 inch</small>
+                                <h5 class="mt-1 mb-0" style="color:var(--gold)">₹900</h5>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center p-3 rounded-3 border">
+                                <strong class="d-block">Large</strong>
+                                <small class="text-muted">18×24 inch</small>
+                                <h5 class="mt-1 mb-0" style="color:var(--gold)">₹1500</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Subject Name *</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Upload Photo *</label>
+                            {{ form.image }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Size *</label>
+                            {{ form.size }}
+                        </div>
+                        <div id="priceDisplay" class="alert alert-success mb-3 d-none">
+                            <i class="fas fa-tag me-2"></i>
+                            Estimated Price: <strong id="priceValue"></strong>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Special Notes</label>
+                            {{ form.special_notes }}
+                        </div>
+                        <button type="submit" class="btn btn-gold w-100 py-2 fw-semibold">
+                            <i class="fas fa-palette me-2"></i>Place Portrait Order
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const prices = { small: '₹500', medium: '₹900', large: '₹1500' };
+document.getElementById('sizeSelect').addEventListener('change', function() {
+    const val = this.value;
+    const display = document.getElementById('priceDisplay');
+    if (val && prices[val]) {
+        document.getElementById('priceValue').textContent = prices[val];
+        display.classList.remove('d-none');
+    } else {
+        display.classList.add('d-none');
+    }
+});
+</script>
+{% endblock %}

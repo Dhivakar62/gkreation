@@ -1,0 +1,10 @@
+/* GK Creations – Custom overrides */
+/* Main styles are loaded via CDN in base.html (Bootstrap 5, FontAwesome, Google Fonts) */
+/* Add any custom CSS overrides here */
+
+:root {
+    --gold: #C9A84C;
+    --dark: #1a1a2e;
+    --cream: #FDF8F0;
+    --accent: #8B4513;
+}

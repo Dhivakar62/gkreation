@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}My Orders - GK Creations{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="section-title mb-4">My Orders</h2>
+    {% if orders %}
+    <div class="row g-3">
+        {% for order in orders %}
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-3 p-md-4">
+                    <div class="row align-items-center g-2">
+                        <div class="col-md-2">
+                            <small class="text-muted d-block">Order ID</small>
+                            <strong>#{{ order.pk }}</strong>
+                        </div>
+                        <div class="col-md-3">
+                            <small class="text-muted d-block">Date</small>
+                            <span>{{ order.created_at|date:"d M Y" }}</span>
+                        </div>
+                        <div class="col-md-2">
+                            <small class="text-muted d-block">Amount</small>
+                            <strong style="color:var(--gold)">₹{{ order.total_amount }}</strong>
+                        </div>
+                        <div class="col-md-2">
+                            <small class="text-muted d-block">Payment</small>
+                            <span>{{ order.get_payment_method_display }}</span>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="badge badge-{{ order.status }} rounded-pill px-3 py-2">{{ order.get_status_display }}</span>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <a href="{% url 'order_detail' order.pk %}" class="btn btn-outline-gold btn-sm">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5 text-muted">
+        <i class="fas fa-box-open fa-4x mb-3"></i>
+        <h5>No orders yet</h5>
+        <a href="{% url 'home' %}" class="btn btn-gold mt-2">Start Shopping</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

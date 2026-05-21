@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us - GK Creations{% endblock %}
+{% block nav_contact %}active{% endblock %}
+
+{% block content %}
+<div class="py-5" style="background:linear-gradient(135deg,var(--dark),#2d1b69)">
+    <div class="container text-center text-white py-4">
+        <h1 style="font-family:'Playfair Display',serif;color:var(--gold)">Contact Us</h1>
+        <p class="text-white-50">We'd love to hear from you</p>
+    </div>
+</div>
+<div class="container py-5">
+    <div class="row g-5">
+        <div class="col-lg-5">
+            <h2 class="section-title mb-4">Get in Touch</h2>
+            <div class="d-flex gap-3 mb-4">
+                <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:var(--gold)">
+                    <i class="fas fa-phone text-dark"></i>
+                </div>
+                <div>
+                    <strong>Phone</strong>
+                    <p class="text-muted mb-0">+91 98765 43210</p>
+                </div>
+            </div>
+            <div class="d-flex gap-3 mb-4">
+                <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:var(--gold)">
+                    <i class="fas fa-envelope text-dark"></i>
+                </div>
+                <div>
+                    <strong>Email</strong>
+                    <p class="text-muted mb-0">hello@gkcreations.in</p>
+                </div>
+            </div>
+            <div class="d-flex gap-3 mb-4">
+                <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:50px;height:50px;background:var(--gold)">
+                    <i class="fas fa-map-marker-alt text-dark"></i>
+                </div>
+                <div>
+                    <strong>Location</strong>
+                    <p class="text-muted mb-0">123 Art Street, Creative Nagar<br>Mumbai, Maharashtra 400001</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <h5 class="fw-bold mb-4">Send us a Message</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Your Name</label>
+                                <input type="text" class="form-control" placeholder="Full Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Email</label>
+                                <input type="email" class="form-control" placeholder="email@example.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Subject</label>
+                                <input type="text" class="form-control" placeholder="How can we help?">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Message</label>
+                                <textarea class="form-control" rows="5" placeholder="Write your message here..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gold mt-4 px-5 fw-semibold">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
