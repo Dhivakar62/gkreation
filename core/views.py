@@ -1,3 +1,24 @@
+# ── pkg_resources shim ───────────────────────────────────────────────────────
+# razorpay==1.4.2 imports pkg_resources which is absent from Python 3.11+ venvs.
+# This shim injects a compatible mock into sys.modules before razorpay loads.
+import sys as _sys
+if 'pkg_resources' not in _sys.modules:
+    try:
+        import pkg_resources  # noqa: F401 – already present, nothing to do
+    except ImportError:
+        import types as _types
+        import importlib.metadata as _meta
+        _pr = _types.ModuleType('pkg_resources')
+        class _DistributionNotFound(Exception):
+            pass
+        _pr.DistributionNotFound = _DistributionNotFound
+        def _require(name):
+            class _Dist:
+                version = _meta.version(name)
+            return [_Dist()]
+        _pr.require = _require
+        _sys.modules['pkg_resources'] = _pr
+# ─────────────────────────────────────────────────────────────────────────────
 import razorpay
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
