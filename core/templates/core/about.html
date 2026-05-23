@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static product_tags %}
 {% block title %}About Us — GKreation's{% endblock %}
 {% block nav_about %}active{% endblock %}
 
@@ -54,7 +54,7 @@
       <div class="col-md-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'1' }}00">
         <div class="gk-product-card h-100">
           <div class="gk-product-img-wrap">
-            <img src="{% static frame.image.name %}" class="gk-product-img" alt="{{ frame.name }}" loading="lazy">
+            {% product_image_url frame as piu %}<img src="{{ piu }}" class="gk-product-img" alt="{{ frame.name }}" loading="lazy">
             <div class="gk-product-overlay">
               <a href="{% url 'product_detail' frame.id %}" class="gk-btn-ghost">View Details</a>
             </div>
@@ -94,7 +94,7 @@
       <div class="col-md-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'1' }}00">
         <div class="gk-product-card h-100">
           <div class="gk-product-img-wrap">
-            <img src="{% static painting.image.name %}" class="gk-product-img" alt="{{ painting.name }}" loading="lazy">
+            {% product_image_url painting as piu %}<img src="{{ piu }}" class="gk-product-img" alt="{{ painting.name }}" loading="lazy">
             <div class="gk-product-overlay">
               <a href="{% url 'product_detail' painting.id %}" class="gk-btn-ghost">View Details</a>
             </div>
@@ -136,9 +136,14 @@
         <a href="{% url 'portrait' %}" class="gk-btn-gold mt-4 d-inline-block">Explore Portrait Collection</a>
       </div>
       <div class="col-lg-6" data-aos="fade-left">
-        <div class="gk-portrait-grid">
-          <img src="{% static 'images/paintings/painting_09.jpg' %}" class="gk-portrait-main" alt="Portrait Art" loading="lazy">
-          <img src="{% static 'images/paintings/painting_07.jpg' %}" class="gk-portrait-sub" alt="Portrait Art" loading="lazy">
+        <div class="gk-portrait-quote-block">
+          <div class="gk-portrait-icon mb-4"><i class="ti ti-palette" style="font-size:4rem;color:var(--gold);opacity:.7"></i></div>
+          <blockquote class="gk-portrait-bq">
+            "Every portrait preserves a story."
+          </blockquote>
+          <p style="color:rgba(255,255,255,.6);font-size:.95rem;margin-top:1rem">
+            Transform memories into timeless artistic expressions — rendered with precision, delivered with care.
+          </p>
         </div>
       </div>
     </div>
@@ -310,5 +315,9 @@
   .gk-portrait-grid{grid-template-columns:1fr;}
   .gk-portrait-sub{display:none;}
 }
+
+/* ── Portrait Quote Block ── */
+.gk-portrait-quote-block{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:2rem;}
+.gk-portrait-bq{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;color:rgba(255,255,255,.9);border-left:3px solid var(--gold);padding-left:1.5rem;text-align:left;line-height:1.8;}
 </style>
 {% endblock %}
