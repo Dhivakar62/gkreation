@@ -1,67 +1,314 @@
 {% extends 'base.html' %}
-{% block title %}About Us - GKreation's{% endblock %}
+{% load static %}
+{% block title %}About Us — GKreation's{% endblock %}
 {% block nav_about %}active{% endblock %}
 
 {% block content %}
-<div class="py-5" style="background:linear-gradient(135deg,var(--dark),#2d1b69)">
-    <div class="container text-center text-white py-4">
-        <h1 style="font-family:'Playfair Display',serif;color:var(--gold)">About GKreation's</h1>
-        <p class="text-white-50 mt-2">Crafting memories through art since 2014</p>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="gk-hero-about position-relative text-white text-center py-5">
+  <div class="gk-hero-overlay"></div>
+  <div class="container position-relative py-5">
+    <span class="gk-badge mb-3 d-inline-block">Est. 2014</span>
+    <h1 class="gk-display mb-3">About <span class="gk-gold">GKreation's</span></h1>
+    <p class="gk-subtitle mx-auto">Where artistry meets craftsmanship. Every product we create carries a story — yours.</p>
+    <div class="row justify-content-center mt-5 g-4">
+      <div class="col-4 col-md-2"><div class="gk-stat"><span class="gk-stat-num">500+</span><br><small>Products</small></div></div>
+      <div class="col-4 col-md-2"><div class="gk-stat"><span class="gk-stat-num">1200+</span><br><small>Customers</small></div></div>
+      <div class="col-4 col-md-2"><div class="gk-stat"><span class="gk-stat-num">10+</span><br><small>Years</small></div></div>
     </div>
-</div>
-<div class="container py-5">
+  </div>
+</section>
+
+<!-- ═══ OUR STORY ══════════════════════════════════════════════════════════ -->
+<section class="py-5 bg-white">
+  <div class="container py-3">
     <div class="row g-5 align-items-center">
-        <div class="col-lg-6">
-            <h2 class="section-title mb-4">Our Story</h2>
-            <p class="text-muted" style="line-height:1.9">GKreation's was born from a deep passion for art and a desire to bring beauty into everyday spaces. What started as a small studio in 2014 has grown into a beloved art destination, serving over 1,200 happy customers across the country.</p>
-            <p class="text-muted" style="line-height:1.9">We specialize in handcrafted frames, original paintings, custom portraits, and professional event photography — each piece created with meticulous attention to detail and genuine artistic love.</p>
-            <div class="row g-3 mt-3">
-                <div class="col-4 text-center">
-                    <h3 style="color:var(--gold)" class="fw-bold">500+</h3>
-                    <small class="text-muted">Products</small>
-                </div>
-                <div class="col-4 text-center">
-                    <h3 style="color:var(--gold)" class="fw-bold">1200+</h3>
-                    <small class="text-muted">Customers</small>
-                </div>
-                <div class="col-4 text-center">
-                    <h3 style="color:var(--gold)" class="fw-bold">10+</h3>
-                    <small class="text-muted">Years</small>
-                </div>
-            </div>
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="gk-label">Our Journey</span>
+        <h2 class="gk-section-title mt-2 mb-4">A Passion for Art,<br>A Dedication to Quality</h2>
+        <p class="text-muted lh-lg">GKreation's was born from a genuine love for art and a belief that beautiful spaces begin with thoughtful curation. Since 2014, we have grown from a small studio into a trusted destination serving customers across the country.</p>
+        <p class="text-muted lh-lg">From premium frames and original paintings to custom portraits and professional photography, every piece we offer is selected and presented with the same care we would give our own home.</p>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="gk-grid-2">
+          <img src="{% static 'images/frames/frame_07.jpg' %}" class="gk-story-img" alt="Our Work" loading="lazy">
+          <img src="{% static 'images/paintings/painting_04.jpg' %}" class="gk-story-img mt-4" alt="Our Art" loading="lazy">
         </div>
-        <div class="col-lg-6">
-            <div class="row g-3">
-                <div class="col-6">
-                    <div class="card border-0 shadow-sm p-4 text-center h-100">
-                        <i class="fas fa-paint-brush fa-2x mb-3" style="color:var(--gold)"></i>
-                        <h6 class="fw-bold">Handcrafted</h6>
-                        <small class="text-muted">Every piece made with care</small>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card border-0 shadow-sm p-4 text-center h-100">
-                        <i class="fas fa-star fa-2x mb-3" style="color:var(--gold)"></i>
-                        <h6 class="fw-bold">Premium Quality</h6>
-                        <small class="text-muted">Only the finest materials</small>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card border-0 shadow-sm p-4 text-center h-100">
-                        <i class="fas fa-truck fa-2x mb-3" style="color:var(--gold)"></i>
-                        <h6 class="fw-bold">Fast Delivery</h6>
-                        <small class="text-muted">14-day guaranteed</small>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card border-0 shadow-sm p-4 text-center h-100">
-                        <i class="fas fa-heart fa-2x mb-3" style="color:var(--gold)"></i>
-                        <h6 class="fw-bold">Made with Love</h6>
-                        <small class="text-muted">Art from the heart</small>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>
+
+<!-- ═══ SECTION A — FEATURED FRAMES ════════════════════════════════════════ -->
+<section class="py-5 gk-section-alt">
+  <div class="container py-3">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="gk-label">Curated Selection</span>
+      <h2 class="gk-section-title mt-2">Premium Frames Collection</h2>
+      <p class="gk-quote mt-3">"Beautiful spaces begin with beautifully framed memories."</p>
+      <p class="gk-support">Quality design. Elegant finishing. Exceptional value.</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for frame in featured_frames %}
+      <div class="col-md-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'1' }}00">
+        <div class="gk-product-card h-100">
+          <div class="gk-product-img-wrap">
+            <img src="{% static frame.image.name %}" class="gk-product-img" alt="{{ frame.name }}" loading="lazy">
+            <div class="gk-product-overlay">
+              <a href="{% url 'product_detail' frame.id %}" class="gk-btn-ghost">View Details</a>
+            </div>
+          </div>
+          <div class="p-4">
+            <h5 class="gk-product-title">{{ frame.name }}</h5>
+            <p class="text-muted small">{{ frame.description|truncatewords:18 }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="gk-price">₹{{ frame.price }}</span>
+              <a href="{% url 'product_detail' frame.id %}" class="gk-btn-sm">Explore</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted">Frame products coming soon.</div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5">
+      <a href="{% url 'frames' %}" class="gk-btn-primary">View All Frames</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION B — FEATURED PAINTINGS ════════════════════════════════════ -->
+<section class="py-5 bg-white">
+  <div class="container py-3">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="gk-label">Our Own Collection</span>
+      <h2 class="gk-section-title mt-2">Our Signature Paintings</h2>
+      <p class="gk-quote mt-3">"Every brushstroke tells a story."</p>
+      <p class="gk-support">Original artistic creations designed to inspire spaces.</p>
+      <div class="gk-badge-tag mt-2">Our Own Painted Collection</div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for painting in featured_paintings %}
+      <div class="col-md-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'1' }}00">
+        <div class="gk-product-card h-100">
+          <div class="gk-product-img-wrap">
+            <img src="{% static painting.image.name %}" class="gk-product-img" alt="{{ painting.name }}" loading="lazy">
+            <div class="gk-product-overlay">
+              <a href="{% url 'product_detail' painting.id %}" class="gk-btn-ghost">View Details</a>
+            </div>
+          </div>
+          <div class="p-4">
+            <h5 class="gk-product-title">{{ painting.name }}</h5>
+            <p class="text-muted small">{{ painting.description|truncatewords:18 }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="gk-price">₹{{ painting.price }}</span>
+              <a href="{% url 'product_detail' painting.id %}" class="gk-btn-sm">Explore</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted">Painting products coming soon.</div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5">
+      <a href="{% url 'paintings' %}" class="gk-btn-primary">View All Paintings</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION C — PORTRAIT ARTS ══════════════════════════════════════════ -->
+<section class="py-5 gk-section-dark text-white">
+  <div class="container py-3">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="gk-label-light">Personalised Art</span>
+        <h2 class="gk-section-title-white mt-2 mb-4">Portrait Arts</h2>
+        <p style="color:rgba(255,255,255,0.75);line-height:1.9">Transform memorable moments into timeless artistic portraits with personalised styles and premium presentation. Whether it's a cherished family photograph, a beloved companion, or a significant milestone — we bring your vision to life with sensitivity, skill, and enduring quality.</p>
+        <ul class="gk-feature-list mt-4">
+          <li>Graphite & Charcoal Portraits</li>
+          <li>Watercolour & Acrylic Studies</li>
+          <li>Digital Illustration Prints</li>
+          <li>Framed Presentation Available</li>
+        </ul>
+        <a href="{% url 'portrait' %}" class="gk-btn-gold mt-4 d-inline-block">Explore Portrait Collection</a>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="gk-portrait-grid">
+          <img src="{% static 'images/paintings/painting_09.jpg' %}" class="gk-portrait-main" alt="Portrait Art" loading="lazy">
+          <img src="{% static 'images/paintings/painting_07.jpg' %}" class="gk-portrait-sub" alt="Portrait Art" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION D — PHOTOGRAPHY ════════════════════════════════════════════ -->
+<section class="py-5 bg-white">
+  <div class="container py-3">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="gk-label">Professional Services</span>
+      <h2 class="gk-section-title mt-2">Photography Services</h2>
+      <p class="gk-quote mt-3">"Capturing moments that deserve to last forever."</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="gk-service-card text-center p-4">
+          <div class="gk-service-icon mb-3"><i class="ti ti-camera"></i></div>
+          <h5 class="gk-service-title">Wedding Photography</h5>
+          <p class="text-muted small">Every glance, every laugh, every tear — documented with artistry and care. Your wedding day, preserved in its full emotional depth.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="gk-service-card text-center p-4">
+          <div class="gk-service-icon mb-3"><i class="ti ti-user-circle"></i></div>
+          <h5 class="gk-service-title">Portrait Sessions</h5>
+          <p class="text-muted small">Professional studio and outdoor portrait sessions for individuals, families, and corporate profiles. Natural, refined, and timeless.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="gk-service-card text-center p-4">
+          <div class="gk-service-icon mb-3"><i class="ti ti-star"></i></div>
+          <h5 class="gk-service-title">Event Coverage</h5>
+          <p class="text-muted small">From intimate gatherings to grand celebrations, our event photography captures the energy, detail, and atmosphere of every occasion.</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="{% url 'wedding_event' %}" class="gk-btn-primary">Book a Session</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION E — VIDEOGRAPHY ════════════════════════════════════════════ -->
+<section class="py-5 gk-section-alt">
+  <div class="container py-3">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="gk-label">Behind the Lens</span>
+      <h2 class="gk-section-title mt-2">Videography Services</h2>
+      <p class="gk-quote mt-3">"Turning moments into cinematic memories."</p>
+      <p class="gk-support">From wedding films to event reels — we tell your story with cinematic precision and emotional resonance.</p>
+    </div>
+    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-9">
+        <div class="gk-video-wrap">
+          <video class="gk-video" controls preload="none" poster="{% static 'images/frames/frame_06.jpg' %}">
+            <source src="{% static 'videos/gkreations_showreel.mp4' %}" type="video/mp4">
+            Your browser does not support video playback.
+          </video>
+        </div>
+        <div class="row g-4 mt-4">
+          <div class="col-md-4 text-center">
+            <div class="gk-video-feature"><i class="ti ti-device-tv"></i><p class="mt-2 mb-0 small fw-semibold">Cinematic Quality</p><p class="text-muted small">4K resolution capture with colour-graded post-production.</p></div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="gk-video-feature"><i class="ti ti-drone"></i><p class="mt-2 mb-0 small fw-semibold">Aerial Videography</p><p class="text-muted small">Drone footage available for weddings and large events.</p></div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="gk-video-feature"><i class="ti ti-cut"></i><p class="mt-2 mb-0 small fw-semibold">Expert Editing</p><p class="text-muted small">Professional post-production with music, titles, and colour.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="{% url 'wedding_event' %}" class="gk-btn-primary">Book Videography</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA STRIP ═══════════════════════════════════════════════════════════ -->
+<section class="gk-cta-strip text-white text-center py-5">
+  <div class="container py-3">
+    <h2 class="gk-display mb-3">Ready to <span class="gk-gold">Elevate Your Space?</span></h2>
+    <p class="gk-subtitle mb-4">Browse our collections or get in touch to discuss a bespoke creation.</p>
+    <a href="{% url 'home' %}" class="gk-btn-gold me-3">Shop Now</a>
+    <a href="{% url 'contact' %}" class="gk-btn-outline">Contact Us</a>
+  </div>
+</section>
+
+<!-- ═══ PAGE STYLES ══════════════════════════════════════════════════════════ -->
+<style>
+/* ── Tokens ── */
+:root{--gold:#C9A84C;--dark:#1a1a2e;--dark2:#16213e;}
+
+/* ── Hero ── */
+.gk-hero-about{background:linear-gradient(135deg,var(--dark),#2d1b69);min-height:420px;display:flex;align-items:center;}
+.gk-hero-overlay{position:absolute;inset:0;background:url("{% static 'images/frames/frame_11.jpg' %}") center/cover no-repeat;opacity:.08;pointer-events:none;}
+.gk-display{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;}
+.gk-subtitle{font-size:1.1rem;color:rgba(255,255,255,.7);max-width:600px;}
+.gk-stat{background:rgba(255,255,255,.08);border-radius:12px;padding:1rem .5rem;border:1px solid rgba(201,168,76,.3);}
+.gk-stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold);}
+
+/* ── Labels & Quotes ── */
+.gk-label{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.gk-label-light{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,.8);font-weight:600;}
+.gk-section-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#1a1a2e;}
+.gk-section-title-white{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#fff;}
+.gk-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;color:#555;}
+.gk-support{color:#777;font-size:.95rem;}
+.gk-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold);border-radius:50px;padding:.35rem 1.2rem;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;}
+.gk-badge-tag{display:inline-block;background:linear-gradient(135deg,var(--gold),#a8861e);color:#fff;border-radius:50px;padding:.4rem 1.4rem;font-size:.8rem;letter-spacing:1px;font-weight:600;}
+
+/* ── Sections ── */
+.gk-section-alt{background:#f8f6f1;}
+.gk-section-dark{background:linear-gradient(135deg,var(--dark),var(--dark2));}
+
+/* ── Story Images ── */
+.gk-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.gk-story-img{width:100%;height:200px;object-fit:cover;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.12);}
+
+/* ── Product Cards ── */
+.gk-product-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.07);transition:transform .3s,box-shadow .3s;}
+.gk-product-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.14);}
+.gk-product-img-wrap{position:relative;overflow:hidden;height:260px;}
+.gk-product-img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.gk-product-card:hover .gk-product-img{transform:scale(1.05);}
+.gk-product-overlay{position:absolute;inset:0;background:rgba(26,26,46,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.gk-product-card:hover .gk-product-overlay{opacity:1;}
+.gk-product-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:#1a1a2e;font-weight:600;}
+.gk-price{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold);font-weight:700;}
+.gk-gold{color:var(--gold);}
+
+/* ── Portrait Grid ── */
+.gk-portrait-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;}
+.gk-portrait-main{width:100%;height:350px;object-fit:cover;border-radius:16px;}
+.gk-portrait-sub{width:100%;height:160px;object-fit:cover;border-radius:12px;}
+.gk-feature-list{list-style:none;padding:0;}
+.gk-feature-list li{padding:.5rem 0;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.08);}
+.gk-feature-list li::before{content:"✦";color:var(--gold);margin-right:.75rem;}
+
+/* ── Service Cards ── */
+.gk-service-card{background:#fff;border-radius:16px;border:1px solid #f0ece3;transition:transform .3s,box-shadow .3s;}
+.gk-service-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1);}
+.gk-service-icon{font-size:2.2rem;color:var(--gold);}
+.gk-service-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:#1a1a2e;font-weight:600;}
+
+/* ── Video ── */
+.gk-video-wrap{border-radius:20px;overflow:hidden;box-shadow:0 16px 60px rgba(0,0,0,.18);}
+.gk-video{width:100%;display:block;max-height:500px;background:#000;}
+.gk-video-feature i{font-size:2rem;color:var(--gold);}
+
+/* ── CTA Strip ── */
+.gk-cta-strip{background:linear-gradient(135deg,var(--dark),#2d1b69);}
+
+/* ── Buttons ── */
+.gk-btn-primary{display:inline-block;padding:.8rem 2rem;background:var(--gold);color:#1a1a2e;border-radius:50px;font-weight:600;text-decoration:none;font-size:.9rem;letter-spacing:.5px;transition:all .3s;}
+.gk-btn-primary:hover{background:#a8861e;color:#fff;transform:translateY(-2px);}
+.gk-btn-gold{display:inline-block;padding:.8rem 2rem;background:var(--gold);color:#1a1a2e;border-radius:50px;font-weight:600;text-decoration:none;transition:all .3s;}
+.gk-btn-gold:hover{background:#a8861e;color:#fff;transform:translateY(-2px);}
+.gk-btn-outline{display:inline-block;padding:.8rem 2rem;border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;font-weight:600;text-decoration:none;transition:all .3s;}
+.gk-btn-outline:hover{background:rgba(255,255,255,.1);border-color:#fff;}
+.gk-btn-ghost{display:inline-block;padding:.6rem 1.5rem;border:2px solid rgba(255,255,255,.8);color:#fff;border-radius:50px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .3s;}
+.gk-btn-ghost:hover{background:#fff;color:#1a1a2e;}
+.gk-btn-sm{padding:.4rem 1.2rem;background:var(--gold);color:#1a1a2e;border-radius:50px;font-size:.8rem;font-weight:600;text-decoration:none;transition:all .3s;}
+.gk-btn-sm:hover{background:#a8861e;color:#fff;}
+
+@media(max-width:768px){
+  .gk-grid-2{grid-template-columns:1fr;}
+  .gk-portrait-grid{grid-template-columns:1fr;}
+  .gk-portrait-sub{display:none;}
+}
+</style>
 {% endblock %}

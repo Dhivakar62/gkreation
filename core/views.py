@@ -485,7 +485,13 @@ def profile_view(request):
 # ─── Static Pages ──────────────────────────────────────────────────────────────
 
 def about_view(request):
-    return render(request, 'core/about.html')
+    from .models import Product
+    featured_frames   = Product.objects.filter(category='frames',   is_active=True).order_by('-id')[:2]
+    featured_paintings = Product.objects.filter(category='paintings', is_active=True).order_by('-id')[:2]
+    return render(request, 'core/about.html', {
+        'featured_frames': featured_frames,
+        'featured_paintings': featured_paintings,
+    })
 
 
 def contact_view(request):

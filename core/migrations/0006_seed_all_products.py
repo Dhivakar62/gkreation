@@ -1,0 +1,60 @@
+"""
+Seed frames and paintings from uploaded ZIP assets.
+All images served from static/images/ via WhiteNoise — persistent on Render.
+Safe to re-run: checks by model_number before creating.
+"""
+from django.db import migrations
+
+FRAMES = [
+    {"model_number":"GK-FR-NEW-01","name":"Elegant Multi-Photo Wall Ensemble","price":1499,"size":"Mixed 4×6, 5×7, 8×10 inch","material":"Premium MDF with Satin Black Finish","description":"A curated ten-piece wall ensemble crafted for those who believe every wall deserves a story. The varying frame sizes create a dynamic gallery effect, each mount precision-cut for a flush, seamless display. Ideal for living rooms, corridors, or statement walls.","image":"images/frames/frame_01.jpg","stock":15},
+    {"model_number":"GK-FR-NEW-02","name":"Family Portrait Wall Gallery","price":1299,"size":"Mixed 5×7, 8×10, 10×12 inch","material":"Solid Wood, Matte Black Lacquer","description":"A six-frame gallery set designed to honour your family's most treasured moments. The staggered layout and premium matte finish give this collection a museum-quality presence — turning an ordinary wall into a personalised sanctuary.","image":"images/frames/frame_02.jpg","stock":12},
+    {"model_number":"GK-FR-NEW-03","name":"Studio Portrait Display Frame","price":849,"size":"8×10 inch","material":"Dark Walnut Wood, Anti-Glare Glass","description":"A refined single-portrait frame finished in deep walnut tones. The anti-glare glass preserves colour clarity and shields your print from ambient light. A timeless choice for children's portraits, graduation photos, or milestone moments.","image":"images/frames/frame_03.jpg","stock":20},
+    {"model_number":"GK-FR-NEW-04","name":"Royal Gold Ornamental Frame","price":1999,"size":"12×16 inch","material":"Resin, 24K Gold-Leaf Embossed Finish","description":"A statement frame inspired by classical European décor. The deeply embossed gold-leaf border frames your artwork or portrait with regal elegance. Suited for formal interiors, reception areas, and premium gifting.","image":"images/frames/frame_04.jpg","stock":8},
+    {"model_number":"GK-FR-NEW-05","name":"Baroque Sculptural Frame in Onyx","price":1699,"size":"12×18 inch","material":"High-Density Resin, Onyx Matte Finish","description":"Dramatic and architecturally inspired, this baroque frame commands attention. The intricate scroll detailing and deep onyx finish create an instant focal point. Perfect for oversized prints, black & white photography, and fine art display.","image":"images/frames/frame_05.jpg","stock":10},
+    {"model_number":"GK-FR-NEW-06","name":"Noir & Gold Prestige Frame Duo","price":2299,"size":"5×7 & 8×10 inch — Set of 2","material":"Lacquered Wood, 22K Gold Inner Trim","description":"A paired frame set that combines the drama of lacquered noir with the refinement of gold inner banding. Presented as a matched duo, they work beautifully as bedside companions, mantelpiece displays, or as a premium anniversary gift.","image":"images/frames/frame_06.jpg","stock":10},
+    {"model_number":"GK-FR-NEW-07","name":"Artisan Carved Heritage Frame","price":2699,"size":"14×18 inch","material":"Solid Mango Wood, Natural Oil Finish","description":"Born from the tradition of fine woodcraft, this richly carved frame features intricate botanical patterns across its solid mango wood surface. The natural oil finish deepens the grain, giving each piece a warm, lived-in luxury. A collector's centrepiece.","image":"images/frames/frame_07.jpg","stock":6},
+    {"model_number":"GK-FR-NEW-08","name":"Signature Mini Keepsake Frame","price":449,"size":"4×4 inch","material":"MDF, White Gloss Lacquer","description":"Compact in size but rich in sentiment. This polished white mini frame is the ideal companion for your most personal photographs — a gift, a memory, a moment. Lightweight and desk-friendly, it arrives ready to display with a built-in easel back.","image":"images/frames/frame_08.jpg","stock":30},
+    {"model_number":"GK-FR-NEW-09","name":"Couples Satin Black Portrait Frame","price":949,"size":"8×10 inch","material":"Solid Wood, Satin Black Finish","description":"Understated and deeply personal. This satin-black portrait frame is designed to hold your most meaningful moments with quiet confidence. Includes both tabletop stand and wall-mounting hardware for versatile placement.","image":"images/frames/frame_09.jpg","stock":18},
+    {"model_number":"GK-FR-NEW-10","name":"Brushed Gold Aluminium Slim Frames","price":749,"size":"5×7 & 4×6 inch — Set of 2","material":"Brushed Aluminium, Gold Anodised","description":"Minimalism meets luxury in this paired set of brushed-gold aluminium frames. The slender profile draws the eye directly to your photograph while the anodised finish ensures lasting lustre. An ideal addition to contemporary or Scandinavian-inspired interiors.","image":"images/frames/frame_10.jpg","stock":25},
+    {"model_number":"GK-FR-NEW-11","name":"Seven-Piece Artistic Wall Mosaic","price":1899,"size":"Mixed 4×6, 6×8 inch","material":"MDF, Gloss Black Finish","description":"A seven-frame mosaic set designed for asymmetric, artistic wall arrangements. Each frame is precision-mounted to guide the eye through your personal gallery. Ships with a to-scale wall template for effortless installation.","image":"images/frames/frame_11.jpg","stock":12},
+    {"model_number":"GK-FR-NEW-12","name":"Memory Shadow Box — Monochrome Edition","price":1099,"size":"10×12 inch","material":"Deep-Profile MDF, Matte Black","description":"A deep-shadow-box frame built for layered storytelling. Arrange photographs, polaroids, ticket stubs, or keepsakes within its generous depth. The monochrome finish makes the contents the hero. An unforgettable gift for celebrations, farewells, or milestones.","image":"images/frames/frame_12.jpg","stock":15},
+    {"model_number":"GK-FR-NEW-13","name":"Heritage Family Wall Frame Collection","price":2199,"size":"Mixed 4×6, 5×7, 8×10 inch — 7 Piece","material":"Solid Wood, Walnut & Cream Dual Finish","description":"A seven-piece wall collection in warm walnut and cream, designed for multigenerational family displays. Each frame is sized and finished to complement the others, creating a cohesive narrative across your wall. The premium dual-tone palette suits both modern and traditional interiors.","image":"images/frames/frame_13.jpg","stock":8},
+]
+
+PAINTINGS = [
+    {"model_number":"GK-PT-NEW-01","name":"Serene Landscape in Acrylics","price":3499,"size":"18×24 inch","material":"Acrylic on Stretched Canvas","description":"A calming landscape rendered in soft acrylic tones — rolling hills dissolving into a luminous sky. The layered application of colour creates depth and movement, bringing natural light into your interior. Arrives gallery-wrapped and ready to hang.","image":"images/paintings/painting_01.jpg","stock":3},
+    {"model_number":"GK-PT-NEW-02","name":"Abstract Fluid Composition No. 1","price":4200,"size":"20×28 inch","material":"Mixed Media on Canvas","description":"An expressive abstract work in fluid technique — rivers of pigment collide and blend across the canvas surface, producing organic forms that shift with the light. A statement piece for contemporary living rooms, boardrooms, or gallery corridors.","image":"images/paintings/painting_02.jpg","stock":2},
+    {"model_number":"GK-PT-NEW-03","name":"Botanical Study in Oils","price":3800,"size":"16×20 inch","material":"Oil on Linen Canvas","description":"A refined botanical study executed in classical oil technique. Rich greens, burnished golds, and ivory highlights render the subject with botanical precision and painterly warmth. Framed in a natural linen canvas for a gallery-pure presentation.","image":"images/paintings/painting_03.jpg","stock":3},
+    {"model_number":"GK-PT-NEW-04","name":"Golden Horizon — Sunset Abstract","price":4800,"size":"24×30 inch","material":"Acrylic & Gold Leaf on Canvas","description":"The meeting of sky and earth expressed through bold acrylic strokes and applied gold leaf. The metallic accents catch ambient light, giving this work a dynamic, living quality. A commanding centrepiece for dining rooms or executive spaces.","image":"images/paintings/painting_04.jpg","stock":2},
+    {"model_number":"GK-PT-NEW-05","name":"Portrait Study in Charcoal & Wash","price":2999,"size":"14×18 inch","material":"Charcoal & Ink Wash on Fine Paper","description":"A sensitive portrait study combining charcoal's expressive line with the translucency of ink wash. The result is a work of quiet emotional depth — suitable for intimate settings, libraries, or private collections.","image":"images/paintings/painting_05.jpg","stock":4},
+    {"model_number":"GK-PT-NEW-06","name":"Vibrant Floral Bloom","price":3200,"size":"18×24 inch","material":"Acrylic on Canvas Board","description":"An explosion of floral colour rendered in energetic acrylic. The blooms are loosely interpreted — lush, expressive, and deeply joyful. A perfect counterpoint to neutral interiors, this work radiates warmth and vitality in every room it occupies.","image":"images/paintings/painting_06.jpg","stock":3},
+    {"model_number":"GK-PT-NEW-07","name":"Monochrome Portrait — Fine Line Art","price":2500,"size":"12×16 inch","material":"Fine Liner & Ink on Cartridge Paper","description":"An intricate portrait drawn entirely in fine-line ink work. Thousands of deliberate strokes build light, shadow, and form across the surface. Matted and presented under glass, this is a sophisticated piece for collectors who appreciate the discipline of line art.","image":"images/paintings/painting_07.jpg","stock":5},
+    {"model_number":"GK-PT-NEW-08","name":"Abstract Expressionist Study No. 4","price":5200,"size":"24×36 inch","material":"Oil & Palette Knife on Canvas","description":"A bold expressionist work built with palette knife and heavy impasto. Layers of oil pigment rise from the canvas surface, creating genuine texture and sculptural presence. This large-format piece transforms any wall into a visual anchor.","image":"images/paintings/painting_08.jpg","stock":2},
+    {"model_number":"GK-PT-NEW-09","name":"Pencil Portrait — Photorealistic Study","price":3500,"size":"16×20 inch","material":"Graphite Pencil on Premium Drawing Paper","description":"A photorealistic graphite portrait of remarkable technical precision. Each strand of hair, each highlight in the eye, rendered with meticulous care. Presented under museum glass to preserve the delicate pencil work for generations.","image":"images/paintings/painting_09.jpg","stock":3},
+    {"model_number":"GK-PT-NEW-10","name":"Warm Earth Tones — Abstract Landscape","price":4500,"size":"22×28 inch","material":"Mixed Media on Stretched Canvas","description":"A meditative abstract landscape in warm earth tones — terracotta, raw sienna, and ochre layered over a textured ground. The composition evokes vast desert plains and twilight skies, bringing a sense of expansive calm to modern and traditional interiors alike.","image":"images/paintings/painting_10.jpg","stock":2},
+]
+
+
+def seed_products(apps, schema_editor):
+    Product = apps.get_model('core', 'Product')
+    created_f = created_p = 0
+    for data in FRAMES:
+        if not Product.objects.filter(model_number=data['model_number']).exists():
+            Product.objects.create(category='frames', is_active=True, **data)
+            created_f += 1
+    for data in PAINTINGS:
+        if not Product.objects.filter(model_number=data['model_number']).exists():
+            Product.objects.create(category='paintings', is_active=True, **data)
+            created_p += 1
+    print(f"  Created {created_f} frames + {created_p} paintings.")
+
+
+def remove_products(apps, schema_editor):
+    Product = apps.get_model('core', 'Product')
+    all_nums = [f['model_number'] for f in FRAMES] + [p['model_number'] for p in PAINTINGS]
+    Product.objects.filter(model_number__in=all_nums).delete()
+
+
+class Migration(migrations.Migration):
+    dependencies = [('core', '0005_update_frame_image_paths')]
+    operations = [migrations.RunPython(seed_products, remove_products)]
