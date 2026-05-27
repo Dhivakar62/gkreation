@@ -1,24 +1,38 @@
 """
-Custom template tag: product_image_url
-Returns the correct URL for a product image.
-- If image path starts with 'images/' or 'videos/' → served from WhiteNoise static
-- Otherwise falls back to product.image.url (media/)
+product_image_url — resolves any product image to a correct URL.
+
+Routing logic:
+  images/frames/...    → {% static %} via WhiteNoise  (committed, permanent)
+  images/paintings/... → {% static %} via WhiteNoise  (committed, permanent)
+  images/products/...  → {% static %} via WhiteNoise  (committed, permanent)
+  products/...         → static('images/products/...') — remapped to static copy
+  anything else        → product.image.url (media/, admin uploads)
 """
 from django import template
 from django.templatetags.static import static
 
 register = template.Library()
 
+
 @register.simple_tag
 def product_image_url(product):
-    """Return correct URL for a product image, preferring static/ for committed assets."""
-    if not product.image:
+    if not product or not product.image:
         return ''
-    image_name = str(product.image)
-    # Images committed to git → serve via WhiteNoise static
-    if image_name.startswith('images/'):
-        return static(image_name)
-    # Uploaded via admin → serve via media URL
+    path = str(product.image).strip()
+    if not path:
+        return ''
+
+    # Already in static/images/ — serve via WhiteNoise
+    if path.startswith('images/'):
+        return static(path)
+
+    # Old-format products/filename.jpg — remap to static copy
+    if path.startswith('products/'):
+        filename = path.split('/', 1)[-1]
+        static_path = f'images/products/{filename}'
+        return static(static_path)
+
+    # Fallback: admin-uploaded media
     try:
         return product.image.url
     except Exception:
